@@ -19,6 +19,7 @@ User.prototype.save = function(callback) {
         password: this.password,
         email: this.email
     };
+    //console.log(user);
     //打开数据库
     mongodb.open(function (err, db) {
         if (err) {
@@ -31,6 +32,7 @@ User.prototype.save = function(callback) {
                 return callback(err);//错误，返回 err 信息
             }
             //将用户数据插入 users 集合
+            //console.log(user);
             collection.insert(user, {
                 safe: true
             }, function (err, user) {
@@ -38,7 +40,8 @@ User.prototype.save = function(callback) {
                 if (err) {
                     return callback(err);//错误，返回 err 信息
                 }
-                callback(null, user[0]);//成功！err 为 null，并返回存储后的用户文档?????????
+                callback(null, user[0]);//成功！err 为 null，并返回存储后的用户文档,user变成数组了，因为是回调函数中的user返回值。。。。
+                //console.log(user);
             });
         });
     });
