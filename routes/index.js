@@ -25,7 +25,7 @@ module.exports = function(app) {
       if(err){
         posts = [];
       }
-      console.log(posts);
+      //console.log(posts);
       res.render('index', {
         title: '主页',
         user: req.session.user,
