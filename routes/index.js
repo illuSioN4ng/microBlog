@@ -7,7 +7,8 @@
 //});
 
 var crypto = require('crypto'),//crypto 是 Node.js 的一个核心模块，我们用它生成散列值来加密密码。
-    User = require('../models/user.js');
+    User = require('../models/user'),
+    Post = require('../models/post');
 
 //module.exports = router;
 module.exports = function(app) {
@@ -20,12 +21,19 @@ module.exports = function(app) {
   //});
 
   app.get('/', function (req, res) {
-    res.render('index', {
-      title: '主页',
-      user: req.session.user,
-      success: req.flash('success').toString(),
-      //success: req.flash('success'),
-      error: req.flash('error').toString()
+    Post.get(null, function(err, posts){
+      if(err){
+        posts = [];
+      }
+      console.log(posts);
+      res.render('index', {
+        title: '主页',
+        user: req.session.user,
+        posts: posts,
+        success: req.flash('success').toString(),
+        //success: req.flash('success'),
+        error: req.flash('error').toString()
+      });
     });
   });
 
@@ -115,13 +123,26 @@ module.exports = function(app) {
   app.get('/post', checkLogin);
   app.get('/post', function (req, res) {
     res.render('post', {
-      title: '发表'
+      title: '发表',
+      user: req.session.user,
+      success: req.flash('success').toString(),
+      error: req.flash('error').toString()
     });
   });
 
   app.post('/post', checkLogin);
   app.post('/post', function (req, res) {
-
+    var currentUser = req.session.user,
+        post = new Post(currentUser.name, req.body.title, req.body.post);
+    //console.log(req.body.post);
+    post.save(function(err){
+      if(err){
+        req.flash('error', err);
+        return res.redirect('/post');
+      }
+      req.flash('success', '发表成功');
+      res.redirect('/');
+    });
   });
 
   app.get('/logout', checkLogin);
