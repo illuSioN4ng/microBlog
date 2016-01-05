@@ -6,11 +6,12 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
+var flash = require('connect-flash');
+var multer  = require('multer');
 
 var routes = require('./routes/index');
 //var users = require('./routes/users');
 var settings = require('./settings');
-var flash = require('connect-flash');
 
 var app = express();
 
@@ -19,6 +20,12 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 app.use(flash());
+app.use(multer({
+  dest: './public/uploadImages',
+  rename: function (fieldname, filename) {
+    return filename;
+  }
+}));
 
 // uncomment after placing your favicon in /public
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));

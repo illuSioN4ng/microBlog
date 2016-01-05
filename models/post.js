@@ -88,7 +88,7 @@ Post.get = function(name, callback){
                 });
 
                 callback(null, docs);
-                //console.log(docs);
+                console.log(docs);
             });
         });
     });

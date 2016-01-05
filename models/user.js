@@ -73,3 +73,26 @@ User.get = function(name, callback) {
         });
     });
 };
+
+//var crypto = require('crypto'),
+//    mongoose = require('mongoose');
+//
+//mongoose.connect('mongodb://localhost/microBlog');
+//
+//var userSchema = new mongoose.Schema({
+//    name: String,
+//    password: String,
+//    email: String,
+//    head: String
+//},{
+//    collection: 'users'
+//});
+//
+//var userModel = mongoose.model('User', userSchema);
+//
+//function User(user){
+//    this.name = user.name;
+//    this.password = user.password;
+//    this.email = user.email;
+//};
+
