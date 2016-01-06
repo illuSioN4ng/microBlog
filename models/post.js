@@ -57,8 +57,8 @@ Post.prototype.save = function(callback){
     });
 };
 
-//读取文章及其相关信息
-Post.get = function(name, callback){
+//获取一个人的所有文章（传入参数 name）或获取所有人的文章（不传入参数）。
+Post.getAll = function(name, callback){
     //打开数据库
     mongodb.open(function(err, db){
         if(err){
@@ -88,8 +88,37 @@ Post.get = function(name, callback){
                 });
 
                 callback(null, docs);
-                console.log(docs);
+                //console.log(docs);
             });
         });
     });
 };
+
+Post.getOne = function(name, day, title, callback){
+    //打开数据库
+    mongodb.open(function(err, db){
+        if(err){
+            return callback(err);
+        }
+        //读取posts集合
+        db.collection('posts', function(err, collection){
+            if(err){
+                mongodb.close();
+                return callback(err);
+            }
+            //根据用户名、发表日期、文章名进行查找
+            collection.findOne({
+                'name': name,
+                'time.day': day,
+                'title': title,
+            },function(err, doc){
+                mongodb.close();
+                if(err){
+                    return callback(err);
+                }
+                doc.post = markdown.toHTML(doc.post);//解析 markdown
+                callback(null, doc);//返回查询到的文章，err为null
+            });
+        });
+    });
+}
