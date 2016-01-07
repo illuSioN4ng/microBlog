@@ -29,7 +29,8 @@ Post.prototype.save = function(callback){
         name: this.name,
         time: time,
         title: this.title,
-        post: this.post
+        post: this.post,
+        comments: []
     };
     //console.log(post);
     //打开数据库
@@ -116,7 +117,15 @@ Post.getOne = function(name, day, title, callback){
                 if(err){
                     return callback(err);
                 }
-                doc.post = markdown.toHTML(doc.post);//解析 markdown
+                //doc.post = markdown.toHTML(doc.post);//解析 markdown
+                if(doc){
+                    doc.post = markdown.toHTML(doc.post);
+                    if(doc.comments){
+                        doc.comments.forEach(function(comment){
+                            comment.content = markdown.toHTML(comment.content);
+                        });
+                    }
+                }
                 callback(null, doc);//返回查询到的文章，err为null
             });
         });
