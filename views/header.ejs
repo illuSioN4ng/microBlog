@@ -9,6 +9,10 @@
 
 <header>
     <h1><%= title %></h1>
+    <% if(user){ %>
+    <span class="tip">欢迎 <span class="userName"><%= user.name %></span>访问本站</span>
+    <div class="clr"></div>
+    <% } %>
 </header>
 
 <nav>
