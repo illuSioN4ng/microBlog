@@ -59,7 +59,8 @@ Post.prototype.save = function(callback){
 };
 
 //获取一个人的所有文章（传入参数 name）或获取所有人的文章（不传入参数）。
-Post.getAll = function(name, callback){
+//mongodb 的 skip 和 limit 操作,实现主页和用户页面每页最多显示十篇文章
+Post.getTen = function(name, page, callback){
     //打开数据库
     mongodb.open(function(err, db){
         if(err){
@@ -75,21 +76,28 @@ Post.getAll = function(name, callback){
             if(name){
                 query.name = name;
             }
-            //根据 query 对象查询文章
-            collection.find(query).sort({
-                time: -1
-            }).toArray(function(err, docs){
-                mongodb.close();
-                if(err){
-                    return callback(err);
-                }
+            //使用count返回特定查询的文档数total
+            collection.count(query,  function(err, total){
+                //console.log(total);
+                //根据 query 对象查询，并跳过前 (page-1)*10 个结果，返回之后的 10 个结果
+                collection.find(query, {
+                    skip: (page - 1) * 10,
+                    limit: 10
+                }).sort({
+                    time: -1
+                }).toArray(function(err, docs){
+                    mongodb.close();
+                    if(err){
+                        return callback(err);
+                    }
 
-                docs.forEach(function (doc) {
-                    doc.post = markdown.toHTML(doc.post);
+                    docs.forEach(function (doc) {
+                        doc.post = markdown.toHTML(doc.post);
+                    });
+
+                    callback(null, docs, total);
+                    //console.log(docs);
                 });
-
-                callback(null, docs);
-                //console.log(docs);
             });
         });
     });
