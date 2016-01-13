@@ -32,7 +32,8 @@ Post.prototype.save = function(callback){
         title: this.title,
         tags: this.tags,
         post: this.post,
-        comments: []
+        comments: [],
+        pv: 0
     };
     //console.log(post);
     //打开数据库
@@ -123,12 +124,25 @@ Post.getOne = function(name, day, title, callback){
                 'time.day': day,
                 'title': title,
             },function(err, doc){
-                mongodb.close();
                 if(err){
+                    mongodb.close();
                     return callback(err);
                 }
-                //doc.post = markdown.toHTML(doc.post);//解析 markdown
                 if(doc){
+                    //每访问 1 次，pv 值增加 1
+                    collection.update({
+                        "name": name,
+                        "time.day": day,
+                        "title": title
+                    }, {
+                        $inc: {"pv": 1}
+                    }, function (err) {
+                        mongodb.close();
+                        if (err) {
+                            return callback(err);
+                        }
+                    });
+                    //doc.post = markdown.toHTML(doc.post);解析 markdown
                     doc.post = markdown.toHTML(doc.post);
                     if(doc.comments){
                         doc.comments.forEach(function(comment){
@@ -136,6 +150,7 @@ Post.getOne = function(name, day, title, callback){
                         });
                     }
                 }
+                mongodb.close();
                 callback(null, doc);//返回查询到的文章，err为null
             });
         });
