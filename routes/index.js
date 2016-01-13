@@ -152,6 +152,22 @@ module.exports = function(app) {
     });
   });
 
+  app.get('/archive', function(req, res){
+    Post.getArchive(function(err, posts){
+      if(err){
+        req.flash('error', err);
+        return res.redirect('/');
+      }
+      res.render('archive', {
+        user: req.session.user,
+        title: '存档',
+        success: req.flash('success').toString(),
+        error: req.flash('error').toString(),
+        posts: posts
+      });
+    });
+  });
+
   app.get('/u/:name', function(req, res){ //app.get('/u/:name')，用来处理访问用户页的请求，然后从数据库取得该用户的数据并渲染 user.ejs 模版，生成页面并显示给用户。
     var page = parseInt(req.query.p) || 1;
     //检查用户是否存在

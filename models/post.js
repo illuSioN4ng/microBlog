@@ -227,3 +227,32 @@ Post.remove = function(name, day, title, callback) {
         });
     });
 };
+
+Post.getArchive = function(callback){
+    //打开数据库
+    mongodb.open(function(err, db){
+        if(err){
+            return callback(err);
+        }
+        //读取posts集合
+        mongodb.collection('posts',function(err, collection){
+            if(err){
+                mongodb.close();
+                return callback(err);
+            }
+            collection.find({},{
+                name: 1,
+                title: 1,
+                time: 1
+            }).sort({
+                time: -1
+            }).toArray(function(err, docs){
+                mongodb.close();
+                if(err){
+                    return callback(err);
+                }
+                callback(null, docs);
+            })
+        });
+    });
+};
