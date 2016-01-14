@@ -1,0 +1,5 @@
+::1 - - [Thu, 14 Jan 2016 02:53:44 GMT] "GET / HTTP/1.1" 200 11942 "http://localhost:3000/u/angang/2016-1-13/%E9%BB%91%E7%BE%BD%E5%B7%9D" "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36"
+::1 - - [Thu, 14 Jan 2016 02:53:44 GMT] "GET /stylesheets/style.css HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36"
+::1 - - [Thu, 14 Jan 2016 02:53:44 GMT] "GET /uploadImages/angang.jpg HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36"
+::1 - - [Thu, 14 Jan 2016 02:54:06 GMT] "GET /archive HTTP/1.1" 200 3844 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36"
+::1 - - [Thu, 14 Jan 2016 02:54:06 GMT] "GET /stylesheets/style.css HTTP/1.1" 304 - "http://localhost:3000/archive" "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36"

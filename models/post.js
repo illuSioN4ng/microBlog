@@ -9,6 +9,7 @@ function Post(name, title, tags, post){
     this.title = title;
     this.post = post;
     this.tags = tags;
+    this.head = head;
 }
 
 module.exports = Post;
@@ -32,6 +33,7 @@ Post.prototype.save = function(callback){
         title: this.title,
         tags: this.tags,
         post: this.post,
+        head: this.head,
         comments: [],
         pv: 0
     };
