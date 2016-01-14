@@ -242,9 +242,18 @@ module.exports = function(app) {
         user: req.session.user,
         success: req.flash('success').toString(),
         error: req.flash('error').toString()
-      })
-    })
-  })
+      });
+    });
+  });
+
+  app.get('/links', function (req, res) {
+    res.render('links', {
+      title: '友情链接',
+      user: req.session.user,
+      success: req.flash('success').toString(),
+      error: req.flash('error').toString()
+    });
+  });
 
   app.get('/u/:name/:day/:title', function(req, res){
     Post.getOne(req.params.name, req.params.day,  req.params.title, function(err, post){
