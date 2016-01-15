@@ -74,7 +74,7 @@ app.use(function(req, res, next) {
 
 // error handlers
 
-// development error handler
+// development error handler开发环境，500错误处理和错误堆栈跟踪
 // will print stacktrace开发环境下的错误处理器，将错误信息渲染error模版并显示到浏览器中。
 if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
@@ -86,7 +86,7 @@ if (app.get('env') === 'development') {
   });
 }
 
-// production error handler
+// production error handler生产环境，500错误处理
 // no stacktraces leaked to user生产环境下的错误处理器，将错误信息渲染error模版并显示到浏览器中。
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);
