@@ -38,7 +38,7 @@ module.exports = function(app) {
         //isFirstPage: (page - 1) == 0,
         //isLastPage: ((page - 1) * 10 + posts.length) == total,
         pageCount: pageCount,
-        numberOfPages: 6,
+        numberOfPages: 5,
         success: req.flash('success').toString(),
         //success: req.flash('success'),
         error: req.flash('error').toString()
@@ -226,7 +226,7 @@ module.exports = function(app) {
           //isFirstPage: (page - 1) == 0,
           //isLastPage: ((page - 1) * 10 + posts.length) == total,
           pageCount: pageCount,
-          numberOfPages: 6,
+          numberOfPages: 5,
           user: req.session.user,
           success: req.flash('success').toString(),
           error: req.flash('error').toString()
