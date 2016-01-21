@@ -9,14 +9,17 @@
         //获得浏览器参数
         $.extend({
             getUrl: function(){
-                var channelUrl, index;
-                index = window.location.href.indexOf('?');
+                var channelUrl, index, url;
+                url = window.location.href;
+                index = url.indexOf('?');
                 if(index == -1){
-                    channelUrl = window.location.href;
+                    channelUrl = url.slice(0, url.length);
+                    //console.log('**'+channelUrl);
                 }else{
-                    channelUrl = window.location.href.slice(0, index);
+                    channelUrl = url.slice(0, index);
+                    //console.log(channelUrl);
                 }
-                console.log(channelUrl);
+                //console.log(channelUrl);
                 return channelUrl;
             }
         });
@@ -29,7 +32,7 @@
                 totalPages: <%= pageCount %>,
                 numberOfPages: <%= numberOfPages %>,
                 pageUrl: function(type, paging, current) {
-                    var url = $.getUrl() + '?' + "&p=" + paging;
+                    var url = $.getUrl() + '?' + "p=" + paging;
                     return url;
                 }
             }
