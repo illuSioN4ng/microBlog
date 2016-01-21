@@ -1,5 +1,42 @@
 </article>
-<script src="http://apps.bdimg.com/libs/jquery/1.11.3/jquery.min.js"></script>
-<script src="http://apps.bdimg.com/libs/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<%- include paging %>
+<script type="text/javascript" src="/javascripts/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/javascripts/bootstrap.min.js"></script>
+<script type="text/javascript" src="/javascripts/bootstrap-paginator.js"></script>
+<script type="text/javascript">
+    <% if(typeof(pageCount) !== 'undefined') { %>
+    $(function(){
+        //获得浏览器参数
+        $.extend({
+            getUrl: function(){
+                var channelUrl, index;
+                index = window.location.href.indexOf('?');
+                if(index == -1){
+                    channelUrl = window.location.href;
+                }else{
+                    channelUrl = window.location.href.slice(0, index);
+                }
+                console.log(channelUrl);
+                return channelUrl;
+            }
+        });
+
+    //分页功能
+        var paging = $('#paging');
+        if(paging){
+            var options = {
+                currentPage: <%= page %>,
+                totalPages: <%= pageCount %>,
+                numberOfPages: <%= numberOfPages %>,
+                pageUrl: function(type, paging, current) {
+                    var url = $.getUrl() + '?' + "&p=" + paging;
+                    return url;
+                }
+            }
+            paging.bootstrapPaginator(options);
+        }
+    })
+    <% } %>
+</script>
 </body>
 </html>

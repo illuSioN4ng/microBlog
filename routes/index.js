@@ -29,14 +29,16 @@ module.exports = function(app) {
       if(err){
         posts = [];
       }
-      //console.log(posts);
+      var pageCount = Math.ceil(total / 10);
       res.render('index', {
         title: '主页',
         user: req.session.user,
         posts: posts,
         page: page,
-        isFirstPage: (page - 1) == 0,
-        isLastPage: ((page - 1) * 10 + posts.length) == total,
+        //isFirstPage: (page - 1) == 0,
+        //isLastPage: ((page - 1) * 10 + posts.length) == total,
+        pageCount: pageCount,
+        numberOfPages: 6,
         success: req.flash('success').toString(),
         //success: req.flash('success'),
         error: req.flash('error').toString()
@@ -216,12 +218,15 @@ module.exports = function(app) {
           req.flash('error', err);
           return res.redirect('/');
         }
+        var pageCount = Math.ceil(total / 10);
         res.render('user',{
           title: user.name,
           posts: posts,
           page: page,
-          isFirstPage: (page - 1) == 0,
-          isLastPage: ((page - 1) * 10 + posts.length) == total,
+          //isFirstPage: (page - 1) == 0,
+          //isLastPage: ((page - 1) * 10 + posts.length) == total,
+          pageCount: pageCount,
+          numberOfPages: 6,
           user: req.session.user,
           success: req.flash('success').toString(),
           error: req.flash('error').toString()
