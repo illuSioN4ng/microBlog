@@ -3,21 +3,25 @@
 <script type="text/javascript" src="/javascripts/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="/javascripts/bootstrap.min.js"></script>
 <script type="text/javascript" src="/javascripts/bootstrap-paginator.js"></script>
+<% if(typeof(pageCount) !== 'undefined') { %>
 <script type="text/javascript">
-    <% if(typeof(pageCount) !== 'undefined') { %>
     $(function(){
         //获得浏览器参数
         $.extend({
             getUrl: function(){
                 var channelUrl, index, url;
                 url = window.location.href;
+//                url1 = window.location.search;
+//                console.log(url1);
                 index = url.indexOf('?');
+                //console.log(index);
                 if(index == -1){
-                    channelUrl = url.slice(0, url.length);
-                    //console.log('**'+channelUrl);
+                    channelUrl = url;
+                    //channelUrl = url.slice(0, url.length-1);
+//                    console.log('**'+channelUrl);
                 }else{
                     channelUrl = url.slice(0, index);
-                    //console.log(channelUrl);
+//                    console.log(channelUrl);
                 }
                 //console.log(channelUrl);
                 return channelUrl;
@@ -39,7 +43,7 @@
             paging.bootstrapPaginator(options);
         }
     })
-    <% } %>
 </script>
+<% } %>
 </body>
 </html>
